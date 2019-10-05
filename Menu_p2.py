@@ -1,9 +1,13 @@
 
 import curses #import the curses library
-"""
-import time
-from Carga_Mas import Import_data #para importar datos en csv
 
+import time
+from Carga_Data import Import_data #para importar datos en csv
+
+from ListaDoble import ListaDob #para lista de bloques
+lis_blocks = ListaDob()
+
+"""
 #####
 from CircularDoble import ListaCir #para lista cicrular del usuario
 lis_user = ListaCir()
@@ -22,18 +26,18 @@ dire = 'KEY_RIGHT'
 
 from curses import KEY_RIGHT, KEY_LEFT, KEY_UP, KEY_DOWN #import special KEYS from the curses library
 
-#data_im = Import_data()
+data_im = Import_data()
 
 
 def paint_menu(win):
     paint_title(win,' MAIN MENU ')          
-    win.addstr(7,21, '1. Play (Battle Royale)')             
-    win.addstr(8,21, '2. Scoreboard')       
-    win.addstr(9,21, '3. User Selection')  
-    win.addstr(10,21, '4. Reports')         
-    win.addstr(11,21, '5. Bulk Loading')    
+    win.addstr(7,21, '1. Insert Block')             
+    win.addstr(8,21, '2. Select Block')       
+    win.addstr(9,21, '3. Reports')  
+    #win.addstr(10,21, '4. Reports')         
+    #win.addstr(11,21, '5. Bulk Loading')    
     win.addstr(13,21, '7. Exit')            
-    win.addstr(12,21, '6. New Player')    
+    #win.addstr(12,21, '6. New Player')    
     win.timeout(-1)                         
 
 def paint_title(win,var):
@@ -339,62 +343,106 @@ def play_snake_back(win):
                 break
 
 
-            
-def obtengo_lis_users():
-    global lis_user
-    lis_user = data_im.retorno_users()
+"""          
+import datetime
+def obtengo_lis_bloques():
+    #global lis_blocks
+    #lis_blocks = data_im.retorno_users()
+    #lis_blocks.insert_ejemplo()
 
+    f_ahora = datetime.datetime.today()
+    date_now_str = f_ahora.strftime('%d-%m-%y::%H:%M:%S')
+    #insert_inicio(index, timestamp, class_b, data, previous_hash, hash_b):
+    lis_blocks.Insert_fin(date_now_str,"estructuras", "jasson1", "5465","as")
+    lis_blocks.Insert_fin(date_now_str,"comp1", "jasson2", "5465","as")
+    lis_blocks.Insert_fin(date_now_str,"ipc1", "jasson3", "5465","as")
+    
+    lis_blocks.Insert_fin(date_now_str,"lenguajes", "jasson5", "5465","as")
 
 #para seleccionar usuarios
-def user_seleccion(win):
+#def contenido_block(win):
+
+#para seleccionar usuarios
+def block_seleccion(win):
 
     #para obtener lista de usuarios
-    obtengo_lis_users()
-    user_actual = lis_user.primero_head  
+    obtengo_lis_bloques()
+    blocke_actual = lis_blocks.primero_head  
+
+    dir_iz = ""
+    dir_der = ""
 
     ##verificando si tiene usuarios ingresados
-    if (user_actual == None):
-        pintar_usuarios(win, "No tiene usuarios ingresados")
+    if (blocke_actual == None):
+        pintar_block(win, "No tiene bloques ingresados")
         while True:
             tecla = window.getch()
             if tecla == 27:
                 break
     else:     
-        user_name = user_actual.user
-        user_name = "<--- " + user_name + " --->"
-        pintar_usuarios(win, user_name)
+        block_name = blocke_actual.class_b
+
+        block_name = block_name + " --->"
+        dir_iz = ""
+        dir_der = " --->"
+        #pintar_block(win, block_name)
+        pintar_block_f2(win, blocke_actual, dir_iz, dir_der)
+
         ##key_selec = window.getch()
         #print("00 pirn " + str(window.getch()))
         while True:
             #tecla = stdscr.getch()
             tecla = win.getch()
             if tecla == curses.KEY_RIGHT:
-                user_actual = user_actual.siguiente
 
-                paint_title(window,' 3 - USER SELECTION ')
-                user_name = user_actual.user
-                user_name = "<--- " + user_name + " --->"
-                pintar_usuarios(win, user_name)
+                if blocke_actual.siguiente != None:
+                    blocke_actual = blocke_actual.siguiente
+
+                    paint_title(window,' 2 - SELECT BLOCK ')
+                    block_name = blocke_actual.class_b
+
+                    if blocke_actual.siguiente != None:
+                        block_name = "<--- " + block_name + " --->"
+                        dir_iz = "<--- "
+                        dir_der = " --->"
+                    else:
+                        block_name = "<--- " + block_name
+                        dir_iz = "<--- "
+                        dir_der = ""
+
+                    #pintar_block(win, block_name)
+                    pintar_block_f2(win, blocke_actual, dir_iz, dir_der)
         
             elif tecla == curses.KEY_LEFT:
-                user_actual = user_actual.anterior
 
-                paint_title(window,' 3 - USER SELECTION ')
-                user_name = user_actual.user
-                user_name = "<--- " + user_name + " --->"
-                pintar_usuarios(win, user_name)
+                if blocke_actual.anterior != None:
+                    blocke_actual = blocke_actual.anterior
+
+                    paint_title(window,' 2 - SELECT BLOCK ')
+                    block_name = blocke_actual.class_b
+
+                    if blocke_actual.anterior != None:
+                        block_name = "<--- " + block_name + " --->"
+                        dir_iz = "<--- " 
+                        dir_der = " --->"
+                    else:
+                        block_name = block_name + " --->"
+                        dir_iz = ""
+                        dir_der = " --->"
+                    #pintar_block(win, block_name)
+                    pintar_block_f2(win, blocke_actual,  dir_iz, dir_der)
 
             #si se preciona enter se selecciona el usuario
             elif tecla == 10:
                 global usuario_actual_play
-                usuario_actual_play = user_actual.user
+                usuario_actual_play = blocke_actual.class_b
                 break
             elif tecla == 27:
                 break
             
-    
 
-def pintar_usuarios(win, user):
+
+def pintar_block(win, user):
     #stdscr.clear()
     #altura, ancho = stdscr.getmaxyx()
     #paint_title(window, ' USER SELECTION ')
@@ -410,12 +458,51 @@ def pintar_usuarios(win, user):
     win.addstr(y,x, user )
     win.refresh()
 
+
+def pintar_block_f2(win, blocke_actual, dir_iz, dir_der):
+    #stdscr.clear()
+    #altura, ancho = stdscr.getmaxyx()
+    #paint_title(window, ' USER SELECTION ')
+    altura = 20 
+    ancho = 60
+    ######curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_BLACK)
+
+    #y = int(altura/2)
+    #x = int(int(ancho/2) - (len(user)/2))
+    y = 4
+    x = 10
+
+    #x = int(int(ancho/2) - (len(menu[index])/2))
+    #stdscr.addstr(y,x, menu[index], curses.color_pair(2))
+    #win.addstr(y,x, user, curses.color_pair(2))
+
+    #win.addstr(y,x, user )
+
+    win.addstr(y,x, "INDEX: " + str(blocke_actual.index))
+    y =y+1
+    win.addstr(y,x, "TIMESTAMP: " + blocke_actual.timestamp )
+    y =y+1
+    win.addstr(y,x, "CLASS: " + blocke_actual.class_b )
+    y =y+1
+    #######
+    win.addstr(y,x, "DATA: " + blocke_actual.data )
+    y =y+1
+    #######
+    win.addstr(y,x, "PREVIOUSHASH: " + blocke_actual.previous_hash )
+    y =y+1
+    win.addstr(y,x, "HASH: " + blocke_actual.hash_b )
+
+    win.addstr(10,4, dir_iz)
+    win.addstr(10,51, dir_der)
+
+    win.refresh()
+
 def import_archiv(win):
 
     while True:
         tecla = window.getch()
         if tecla == 115 or tecla == 83: #S
-            paint_title(window,' 5 - BULK LOADING ')
+            paint_title(window,' 1 -  IMPORT ')
             win.addstr(4,15, 'Ingrese Nombre de Arhivo .csv') 
 
             #agregando texto para nombre csv#
@@ -426,17 +513,16 @@ def import_archiv(win):
             
             encontrad = False
             encontrad = data_im.importando(nombre_archivo)
-            ##lis_user.Lista_imprimir_ade()
-            #lis_user.graf_users()
-            paint_title(window,' 5 - BULK LOADING ')
+            paint_title(window,' 1 - IMPORT ')
             if (encontrad == True):
-                global lis_user
-                lis_user = data_im.retorno_users()
+                #global lis_user
+                #lis_user = data_im.retorno_users()
                 window.addstr(8,5, '(Datos importados) Presione una tecla para salir')
+                print(data_im.retorno_class())
+                print(data_im.retorno_data() )
             elif (encontrad == False):
                 window.addstr(8,5, 'Archivo no Encontrado')
-            
-            
+
             win.keypad(True)    
             curses.noecho()         
             curses.curs_set(0) 
@@ -452,6 +538,7 @@ def import_archiv(win):
         elif tecla == 27:
             break
 
+"""
 def new_player(win):
 
     if (tipo_de_juego == 0):            
@@ -523,7 +610,7 @@ paint_menu(window)      #paint menu
 keystroke = -1
 while(keystroke==-1):
     keystroke = window.getch()  #get current key being pressed
-    if(keystroke==49): #1
+    if(keystroke==490): #1
         #import Jugando
         paint_title(window, ' PLAY (Batlle Royal)')
         
@@ -532,16 +619,16 @@ while(keystroke==-1):
         
         paint_menu(window)
         keystroke=-1
-    elif(keystroke==50):
+    elif(keystroke==500):
         paint_title(window, ' SCOREBOARD ')
         #wait_esc(window)
         scoreboard(window)
         paint_menu(window)
         keystroke=-1
-    elif(keystroke==51):
-        paint_title(window, ' USER SELECTION ')
+    elif(keystroke==50): #2
+        paint_title(window, ' SELECT BLOCK ')
         #wait_esc(window)
-        user_seleccion(window)
+        block_seleccion(window)
         paint_menu(window)
         keystroke=-1
     elif(keystroke==52):
@@ -550,9 +637,9 @@ while(keystroke==-1):
         report_seleccion(window)
         paint_menu(window)
         keystroke=-1
-    elif(keystroke==53):
-        paint_title(window,' 5 BULK LOADING ')
-        window.addstr(7,21, '¿Desea importar Usuarios?')            
+    elif(keystroke==49):
+        paint_title(window,' 1 INSERT BLOCK ')
+        window.addstr(7,21, '¿Desea importar Archivo?')            
         window.addstr(8,21, 'S/N')  
 
         #print(window.getch())
