@@ -53,12 +53,31 @@ def wait_esc(win):
 
 def paint_reports(win):
     paint_title(win,' REPORTS ')         
+    win.addstr(7,21, '1. BLOCKCHAIN REPORT')            
+    win.addstr(8,21, '2. TREE REPORTS')        
+    """
     win.addstr(7,21, '1. Snake Report')            
     win.addstr(8,21, '2. Score Report')      
     win.addstr(9,21, '3. Scoreboard Report')  
-    win.addstr(10,21, '4. Users Report')        
+    win.addstr(10,21, '4. Users Report')    
+    """     
     win.addstr(12,21, '(ESC). Salir')            
     #win.timeout(-1)    
+
+def paint_reports_tree_rep(win):
+    paint_title(win,' TREE REPORTS REPORTS ')         
+    win.addstr(7,21, '1. Visualizar árbol')            
+    win.addstr(8,21, '2. Mostrar recorridos')     
+
+    win.addstr(12,21, '(ESC). Salir')            
+  
+def paint_reports_recorridos(win):
+    paint_title(win,' RECORRIDO REPORTS ')         
+    win.addstr(7,21, '1. Preorden')            
+    win.addstr(8,21, '2. Posorden')  
+    win.addstr(9,21, '3. Inorden')   
+
+    win.addstr(12,21, '(ESC). Salir')
 
 """
 
@@ -95,6 +114,37 @@ def scoreboard(win):
         if tecla == 27:
             break
 
+"""
+#para reporte de recorrido del arbol
+def report_select_recorrido(win):
+     
+    while True:
+        paint_reports_recorridos(win)
+        tecla = window.getch()
+        
+        if tecla == 49: #1
+            Jugando_n_class.game_graf_serpiente()
+            #break
+        elif tecla == 50: #2
+            paint_reports_recorridos(win)
+        elif tecla == 27:
+            break
+
+#para reporte de Arbol
+def report_select_arbol(win):
+     
+    while True:
+        paint_reports_tree_rep(win)
+        tecla = window.getch()
+        
+        if tecla == 49: #1
+            Jugando_n_class.game_graf_serpiente()
+            #break
+        elif tecla == 50: #2
+            report_select_recorrido(win)
+        elif tecla == 27:
+            break
+
 #para seleccionar reportes
 def report_seleccion(win):
      
@@ -103,10 +153,11 @@ def report_seleccion(win):
         tecla = window.getch()
         
         if tecla == 49: #1
-            Jugando_n_class.game_graf_serpiente()
+            lis_blocks.graf_blockchain()
             #break
         elif tecla == 50: #2
-            Jugando_n_class.game_graf_score()
+            #Jugando_n_class.game_graf_score()
+            report_select_arbol(win)
         elif tecla == 51: #3
             tabla_puntos.graf_puntuaciones()
             #break
@@ -127,7 +178,7 @@ def report_seleccion(win):
         elif tecla == 27:
             break
 
-
+"""
  #empezar a jugar
 def play_snake_now(win):   
     global usuario_actual_plays
@@ -631,13 +682,13 @@ while(keystroke==-1):
         block_seleccion(window)
         paint_menu(window)
         keystroke=-1
-    elif(keystroke==52):
+    elif(keystroke==51): #3
         paint_title(window, ' REPORTS ')
         #wait_esc(window)
         report_seleccion(window)
         paint_menu(window)
         keystroke=-1
-    elif(keystroke==49):
+    elif(keystroke==49): #1
         paint_title(window,' 1 INSERT BLOCK ')
         window.addstr(7,21, '¿Desea importar Archivo?')            
         window.addstr(8,21, 'S/N')  

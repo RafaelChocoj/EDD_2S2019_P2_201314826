@@ -1,13 +1,13 @@
 digraph G { rankdir=TB
 node [shape=record];
-node0[label = "{<f0>|<f1> Class = estructuras\nTimeStamp = 04-10-19::18:17:17\nPSHASH = 5465\nHASH = as|<f2> }"];
+node0[label = "{<f0>|<f1> Class = estructuras\nTimeStamp = 06-10-19::20:56:06\nPSHASH = 5465\nHASH = as|<f2> }"];
 node0-> node1;
 node1-> node0;
-node1[label = "{<f0>|<f1> Class = comp1\nTimeStamp = 04-10-19::18:17:17\nPSHASH = 5465\nHASH = as|<f2> }"];
+node1[label = "{<f0>|<f1> Class = comp1\nTimeStamp = 06-10-19::20:56:06\nPSHASH = 5465\nHASH = as|<f2> }"];
 node1-> node2;
 node2-> node1;
-node2[label = "{<f0>|<f1> Class = ipc1\nTimeStamp = 04-10-19::18:17:17\nPSHASH = 5465\nHASH = as|<f2> }"];
+node2[label = "{<f0>|<f1> Class = ipc1\nTimeStamp = 06-10-19::20:56:06\nPSHASH = 5465\nHASH = as|<f2> }"];
 node2-> node3;
 node3-> node2;
-node3[label = "{<f0>|<f1> Class = lenguajes\nTimeStamp = 04-10-19::18:17:17\nPSHASH = 5465\nHASH = as|<f2> }"];
+node3[label = "{<f0>|<f1> Class = lenguajes\nTimeStamp = 06-10-19::20:56:06\nPSHASH = 5465\nHASH = as|<f2> }"];
 }
