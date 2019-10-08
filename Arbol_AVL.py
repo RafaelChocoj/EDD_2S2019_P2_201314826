@@ -13,6 +13,7 @@ class arbol_AVL:
   
     def __init__(self):
         self.root = None
+        self.size = 0
     
     def insert_nod(self, clave, nombre): 
         return self.insert(self.root, clave, nombre)
@@ -21,6 +22,7 @@ class arbol_AVL:
       
         if not root_actual:
             self.root = NodeAVL(clave, nombre) 
+            self.size = self.size +1
             return self.root
         elif clave < root_actual.carnet: 
             root_actual.left = self.insert(root_actual.left, clave, nombre) 
@@ -77,10 +79,8 @@ class arbol_AVL:
         z.right = T2 
   
         # actulizar altura 
-        z.height = 1 + max(self.get_altura(z.left), 
-                         self.get_altura(z.right)) 
-        y.height = 1 + max(self.get_altura(y.left), 
-                         self.get_altura(y.right)) 
+        z.height = 1 + max(self.get_altura(z.left), self.get_altura(z.right)) 
+        y.height = 1 + max(self.get_altura(y.left), self.get_altura(y.right)) 
 
         
         z.fe =  self.get_altura(z.right) - self.get_altura(z.left)  
@@ -99,10 +99,8 @@ class arbol_AVL:
         z.left = T3 
   
         # actulizar altura 
-        z.height = 1 + max(self.get_altura(z.left), 
-                        self.get_altura(z.right)) 
-        y.height = 1 + max(self.get_altura(y.left), 
-                        self.get_altura(y.right))
+        z.height = 1 + max(self.get_altura(z.left), self.get_altura(z.right)) 
+        y.height = 1 + max(self.get_altura(y.left), self.get_altura(y.right))
                         
         z.fe =  self.get_altura(z.right) - self.get_altura(z.left)  
         y.fe =  self.get_altura(y.right) - self.get_altura(y.left) 
@@ -192,16 +190,7 @@ class arbol_AVL:
 
     
     def Graficando_arbol(self):
-        """
-        grafica_orden = "";
-        grafica_orden = grafica_orden + "digraph G { \n";
-        grafica_orden = grafica_orden + "rankdir=TB;\n";
-        grafica_orden = grafica_orden + "graph [nodesep=0.5 ];\n";
-        grafica_orden = grafica_orden + "node [shape = record, fillcolor=seashell2];\n";
-        VerArbol();
-        grafica_orden = grafica_orden + "\n}\n";
-        create_archivo("graf_arbol",grafica_orden);
-        """
+
         f = open("arbol_avl.txt", "w")
         f.write("digraph G { \n")
         f.write("rankdir=TB;\n")
@@ -213,7 +202,7 @@ class arbol_AVL:
         #create_archivo("graf_arbol",grafica_orden);
         f.close()
         os.system("dot -Tpng arbol_avl.txt -o arbol_avl.jpg")
-        os.system("arbol_avl.txt")
+        #os.system("arbol_avl.txt")
         os.system("arbol_avl.jpg")
 
 
@@ -222,11 +211,8 @@ class arbol_AVL:
 
 
     def VerArbol(self, root, f): 
-        #string tem_nod = "";
         if root != None: 
             self.VerArbol(root.left, f)
-
-            #tem_nod = "";
             #Node *tempo; 
             tempo = root
             if (tempo.right != None): 
@@ -243,10 +229,6 @@ class arbol_AVL:
                 f.write("nodo"+ root.carnet)
                 f.write(":C0 -> nodo"+ tempo.left.carnet + "\n")
                 
-            
-            #grafica_orden = grafica_orden + tem_nod
-
-            ##grafica_orden = grafica_orden +"nodo"+ root.carnet  +" [ label =\"<C0>|"+ root.carnet +"|<C1>\"]; \n"
             #f.write("nodo"+ root.carnet  +" [ label =\"<C0>| carne: "+ root.carnet +"|<C1>\"]; \n")
 
             f.write("nodo"+ root.carnet  +" [ label =\"<C0>|")
@@ -257,16 +239,103 @@ class arbol_AVL:
             f.write("|<C1>\"]; \n")
 
             self.VerArbol(root.right, f)
+
+    def Graficando_inor(self):
+        global index_root
+        index_root = 0
+        f = open("inorder.txt", "w")
+        f.write("digraph G { rankdir=LR\n")
+        f.write("node [shape = record, fillcolor=seashell2];\n")
+        self._inorder(f)
+        f.write("\n}\n")
+
+        #create_archivo("graf_in",grafica_orden)
+        f.close()
+        os.system("dot -Tpng inorder.txt -o inorder.jpg")
+        os.system("inorder.txt")
+        os.system("inorder.jpg")
+   
+    def _inorder(self, f):
+        self.inorder(self.root, f)
+
+    def inorder(self, root, f):
+        if (root != None):
+            self.inorder(root.left, f)
+            global index_root
+            index_root = index_root + 1
+            if (index_root != self.size):
+                #f.write(" \"" + root.carnet + "\" ->")
+                f.write(" \"" + root.carnet + "\\n"  + root.nombre + "\" ->")
+            else:
+                f.write(" \"" + root.carnet + "\\n"  + root.nombre + "\"")
+            #cout<< index_root<<"- "<<root->data <<endl;
+            self.inorder(root.right, f)
         
-    
 
-	
+    def Graficando_preor(self):
+        global index_root
+        index_root = 0
+        f = open("preorder.txt", "w")
+        f.write("digraph G { rankdir=LR\n")
+        f.write("node [shape = record, fillcolor=seashell2];\n")
 
-  
-  
+        self._preorder(f)
+        f.write("\n}\n")
+        #create_archivo("graf_pre",grafica_orden);
+        f.close()
+        os.system("dot -Tpng preorder.txt -o preorder.jpg")
+        os.system("preorder.txt")
+        os.system("preorder.jpg")
+
+    def _preorder(self, f):
+        self.preorder(self.root, f)
+
+    def preorder(self, root, f):
+        if (root != None):
+            global index_root
+            index_root = index_root + 1
+            if (index_root != self.size):
+                f.write(" \"" + root.carnet + "\\n"  + root.nombre + "\" ->")
+            else:
+                f.write(" \"" + root.carnet + "\\n"  + root.nombre + "\"")
+
+            self.preorder(root.left, f)
+            self.preorder(root.right, f)
+
+    def Graficando_posor(self):
+        global index_root
+        index_root = 0
+
+        f = open("postorder.txt", "w")
+        f.write("digraph G { rankdir=LR\n")
+        f.write("node [shape = record, fillcolor=seashell2];\n")
+
+        self._postorder(f)
+        f.write("\n}\n")
+        #create_archivo("graf_pos",grafica_orden)
+        f.close()
+        os.system("dot -Tpng postorder.txt -o postorder.jpg")
+        os.system("postorder.txt")
+        os.system("postorder.jpg")
+
+    def _postorder(self, f):
+        self.postorder(self.root, f)
+
+    def postorder(self, root, f):
+        if (root != None):
+            self.postorder(root.left, f)
+            self.postorder(root.right, f)
+            
+            global index_root
+            index_root = index_root + 1
+            if (index_root != self.size):
+                f.write(" \"" + root.carnet + "\\n"  + root.nombre + "\" ->")
+            else:
+                f.write(" \"" + root.carnet + "\\n"  + root.nombre + "\"")
 
 arbol = arbol_AVL() 
-  
+
+"""  
 arbol.insert_nod("mario","mario") 
 arbol.insert_nod("kart","kart") 
 arbol.insert_nod("nose","nose")
@@ -278,11 +347,23 @@ arbol.insert_nod("lz3","lz3")
 arbol.insert_nod("lz5","lz5")
 arbol.insert_nod("ma","ma")
 
+"""
+
+arbol.insert_nod("Mario1","12") 
+arbol.insert_nod("Pickachu","13") 
+arbol.insert_nod("Boo","14")
+arbol.insert_nod("Geoff","15")
+arbol.insert_nod("Mario2","16")
+
 #arbol.insert_nod(40) 
 #arbol.insert_nod(50) 
 #arbol.insert_nod(25) 
 
 print(arbol)
-arbol.print_tree()
+print("size: " + str(arbol.size))
+#arbol.print_tree()
 
 arbol.Graficando_arbol()
+#arbol.Graficando_inor()
+#arbol.Graficando_preor()
+arbol.Graficando_posor()

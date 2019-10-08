@@ -2,24 +2,14 @@ digraph G {
 rankdir=TB;
 graph [nodesep=0.5 ];
 node [shape = record, fillcolor=seashell2];
-nodokart [ label ="<C0>|Carne: kart\nNombre: kart\nAltura: 1\nFE: 0|<C1>"]; 
-nodoluig:C1 -> nodolz3
-nodoluig:C0 -> nodokart
-nodoluig [ label ="<C0>|Carne: luig\nNombre: luig\nAltura: 2\nFE: 0|<C1>"]; 
-nodolz3 [ label ="<C0>|Carne: lz3\nNombre: lz3\nAltura: 1\nFE: 0|<C1>"]; 
-nodolz5:C1 -> nodolzz
-nodolz5:C0 -> nodoluig
-nodolz5 [ label ="<C0>|Carne: lz5\nNombre: lz5\nAltura: 3\nFE: 0|<C1>"]; 
-nodolzz:C1 -> nodoma
-nodolzz [ label ="<C0>|Carne: lzz\nNombre: lzz\nAltura: 2\nFE: 1|<C1>"]; 
-nodoma [ label ="<C0>|Carne: ma\nNombre: ma\nAltura: 1\nFE: 0|<C1>"]; 
-nodomario:C1 -> nodopa1
-nodomario:C0 -> nodolz5
-nodomario [ label ="<C0>|Carne: mario\nNombre: mario\nAltura: 4\nFE: -1|<C1>"]; 
-nodonose [ label ="<C0>|Carne: nose\nNombre: nose\nAltura: 1\nFE: 0|<C1>"]; 
-nodopa1:C1 -> nodoverde
-nodopa1:C0 -> nodonose
-nodopa1 [ label ="<C0>|Carne: pa1\nNombre: pa1\nAltura: 2\nFE: 0|<C1>"]; 
-nodoverde [ label ="<C0>|Carne: verde\nNombre: verde\nAltura: 1\nFE: 0|<C1>"]; 
+nodoBoo:C1 -> nodoGeoff
+nodoBoo [ label ="<C0>|Carne: Boo\nNombre: 14\nAltura: 2\nFE: 1|<C1>"]; 
+nodoGeoff [ label ="<C0>|Carne: Geoff\nNombre: 15\nAltura: 1\nFE: 0|<C1>"]; 
+nodoMario1:C1 -> nodoPickachu
+nodoMario1:C0 -> nodoBoo
+nodoMario1 [ label ="<C0>|Carne: Mario1\nNombre: 12\nAltura: 3\nFE: 0|<C1>"]; 
+nodoMario2 [ label ="<C0>|Carne: Mario2\nNombre: 16\nAltura: 1\nFE: 0|<C1>"]; 
+nodoPickachu:C0 -> nodoMario2
+nodoPickachu [ label ="<C0>|Carne: Pickachu\nNombre: 13\nAltura: 2\nFE: -1|<C1>"]; 
 
 }
