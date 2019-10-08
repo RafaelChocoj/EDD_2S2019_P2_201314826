@@ -8,22 +8,23 @@
             "rigth":null
         }, 
         "right":{
-        "value":"201313526-Alan",
-        "left": null,
-        "rigth":null
+            "value":"201313526-Alan",
+            "left": null,
+            "rigth":null
         }
     },
     "rigth":{
-    "value":"201403819-Anne",
-    "left":{
-        "value":"201403624-Fernando",
-        "left": null,
-        "rigth":null
-    },
-    "rigth":{
-        "value":"2016020255-Estudiante2",
-        "left": null,
-        "rigth":null
-    }
+        "value":"201403819-Anne",
+        "left":{
+            "value":"201403624-Fernando",
+            "left": null,
+            "rigth":null
+        },
+        "rigth":{
+            "value":"2016020255-Estudiante2",
+            "left": null,
+            "rigth":null
+
+        }
     }
 }
