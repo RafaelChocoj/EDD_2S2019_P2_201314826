@@ -230,7 +230,6 @@ class arbol_AVL:
                 f.write(":C0 -> nodo"+ tempo.left.carnet + "\n")
                 
             #f.write("nodo"+ root.carnet  +" [ label =\"<C0>| carne: "+ root.carnet +"|<C1>\"]; \n")
-
             f.write("nodo"+ root.carnet  +" [ label =\"<C0>|")
             f.write("Carne: "+ root.carnet + "\\n")
             f.write("Nombre: "+ root.nombre + "\\n")
@@ -252,7 +251,7 @@ class arbol_AVL:
         #create_archivo("graf_in",grafica_orden)
         f.close()
         os.system("dot -Tpng inorder.txt -o inorder.jpg")
-        os.system("inorder.txt")
+        #os.system("inorder.txt")
         os.system("inorder.jpg")
    
     def _inorder(self, f):
@@ -284,7 +283,7 @@ class arbol_AVL:
         #create_archivo("graf_pre",grafica_orden);
         f.close()
         os.system("dot -Tpng preorder.txt -o preorder.jpg")
-        os.system("preorder.txt")
+        #os.system("preorder.txt")
         os.system("preorder.jpg")
 
     def _preorder(self, f):
@@ -315,7 +314,7 @@ class arbol_AVL:
         #create_archivo("graf_pos",grafica_orden)
         f.close()
         os.system("dot -Tpng postorder.txt -o postorder.jpg")
-        os.system("postorder.txt")
+        #os.system("postorder.txt")
         os.system("postorder.jpg")
 
     def _postorder(self, f):
@@ -333,21 +332,34 @@ class arbol_AVL:
             else:
                 f.write(" \"" + root.carnet + "\\n"  + root.nombre + "\"")
 
-arbol = arbol_AVL() 
+    def insert_ejemplo(self):
+        arbol = arbol_AVL()
 
-"""  
-arbol.insert_nod("mario","mario") 
-arbol.insert_nod("kart","kart") 
-arbol.insert_nod("nose","nose")
-arbol.insert_nod("pa1","pa1")
-arbol.insert_nod("verde","verde")
-arbol.insert_nod("luig","luig")
-arbol.insert_nod("lzz","lzz")
-arbol.insert_nod("lz3","lz3")
-arbol.insert_nod("lz5","lz5")
-arbol.insert_nod("ma","ma")
+        arbol.insert_nod("Mario1","12") 
+        arbol.insert_nod("Pickachu","13") 
+        arbol.insert_nod("Boo","14")
+        arbol.insert_nod("Geoff","15")
+        arbol.insert_nod("Mario2","16")
+
+        #print("size: " + str(arbol.size))
+
+        #arbol.Graficando_arbol()
+        #arbol.Graficando_inor()
+        #arbol.Graficando_preor()
+        #arbol.Graficando_posor()
 
 """
+arbol = arbol_AVL()
+#arbol.insert_nod("mario","mario") 
+#arbol.insert_nod("kart","kart") 
+#arbol.insert_nod("nose","nose")
+#arbol.insert_nod("pa1","pa1")
+#arbol.insert_nod("verde","verde")
+#arbol.insert_nod("luig","luig")
+#arbol.insert_nod("lzz","lzz")
+#arbol.insert_nod("lz3","lz3")
+#arbol.insert_nod("lz5","lz5")
+#arbol.insert_nod("ma","ma")
 
 arbol.insert_nod("Mario1","12") 
 arbol.insert_nod("Pickachu","13") 
@@ -359,11 +371,11 @@ arbol.insert_nod("Mario2","16")
 #arbol.insert_nod(50) 
 #arbol.insert_nod(25) 
 
-print(arbol)
+#print(arbol)
 print("size: " + str(arbol.size))
 #arbol.print_tree()
-
 arbol.Graficando_arbol()
 #arbol.Graficando_inor()
 #arbol.Graficando_preor()
-arbol.Graficando_posor()
+#arbol.Graficando_posor()
+"""

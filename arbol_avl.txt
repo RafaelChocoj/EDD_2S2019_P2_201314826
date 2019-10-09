@@ -2,14 +2,5 @@ digraph G {
 rankdir=TB;
 graph [nodesep=0.5 ];
 node [shape = record, fillcolor=seashell2];
-nodoBoo:C1 -> nodoGeoff
-nodoBoo [ label ="<C0>|Carne: Boo\nNombre: 14\nAltura: 2\nFE: 1|<C1>"]; 
-nodoGeoff [ label ="<C0>|Carne: Geoff\nNombre: 15\nAltura: 1\nFE: 0|<C1>"]; 
-nodoMario1:C1 -> nodoPickachu
-nodoMario1:C0 -> nodoBoo
-nodoMario1 [ label ="<C0>|Carne: Mario1\nNombre: 12\nAltura: 3\nFE: 0|<C1>"]; 
-nodoMario2 [ label ="<C0>|Carne: Mario2\nNombre: 16\nAltura: 1\nFE: 0|<C1>"]; 
-nodoPickachu:C0 -> nodoMario2
-nodoPickachu [ label ="<C0>|Carne: Pickachu\nNombre: 13\nAltura: 2\nFE: -1|<C1>"]; 
 
 }

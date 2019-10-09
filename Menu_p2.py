@@ -7,6 +7,12 @@ from Carga_Data import Import_data #para importar datos en csv
 from ListaDoble import ListaDob #para lista de bloques
 lis_blocks = ListaDob()
 
+global node_block_ac #para el bloque actual seleccionado
+node_block_ac = None
+
+from Arbol_AVL import arbol_AVL #para el arbol avl
+tree_avl = arbol_AVL()
+
 """
 #####
 from CircularDoble import ListaCir #para lista cicrular del usuario
@@ -17,11 +23,8 @@ tabla_puntos = FilaPuntos()
 
 import Jugando_n_class
 
-## usuario_actual_play
 #global usuario_actual_play
 usuario_actual_play = None
-tipo_de_juego = 0
-dire = 'KEY_RIGHT'
 """
 
 from curses import KEY_RIGHT, KEY_LEFT, KEY_UP, KEY_DOWN #import special KEYS from the curses library
@@ -42,9 +45,14 @@ def paint_menu(win):
 
 def paint_title(win,var):
     win.clear()                         
-    win.border(0)                      
+    win.border(0)                  
     x_start = round((60-len(var))/2)    
-    win.addstr(0,x_start,var)           
+    win.addstr(0,x_start,var)   
+
+    if node_block_ac != None:   
+        nod_selct = node_block_ac.class_b
+        x_start2 = round(58-len(nod_selct))    
+        win.addstr(0,x_start2,nod_selct)         
 
 def wait_esc(win):
     key = window.getch()
@@ -122,11 +130,14 @@ def report_select_recorrido(win):
         paint_reports_recorridos(win)
         tecla = window.getch()
         
-        if tecla == 49: #1
-            Jugando_n_class.game_graf_serpiente()
+        if tecla == 49: #1  Preorden
+            #Jugando_n_class.game_graf_serpiente()
+            tree_avl.Graficando_preor()
             #break
-        elif tecla == 50: #2
-            paint_reports_recorridos(win)
+        elif tecla == 50: #2  Posorden
+            tree_avl.Graficando_posor()
+        elif tecla == 51: #3  Inorden
+            tree_avl.Graficando_inor()
         elif tecla == 27:
             break
 
@@ -138,7 +149,8 @@ def report_select_arbol(win):
         tecla = window.getch()
         
         if tecla == 49: #1
-            Jugando_n_class.game_graf_serpiente()
+            #Jugando_n_class.game_graf_serpiente()
+            tree_avl.Graficando_arbol()
             #break
         elif tecla == 50: #2
             report_select_recorrido(win)
@@ -485,8 +497,14 @@ def block_seleccion(win):
 
             #si se preciona enter se selecciona el usuario
             elif tecla == 10:
-                global usuario_actual_play
-                usuario_actual_play = blocke_actual.class_b
+                #global usuario_actual_play
+                #usuario_actual_play = blocke_actual.class_b
+
+                global node_block_ac
+                node_block_ac = blocke_actual
+                #solo para ejemplo
+                tree_avl.insert_ejemplo()
+
                 break
             elif tecla == 27:
                 break
@@ -661,21 +679,22 @@ paint_menu(window)      #paint menu
 keystroke = -1
 while(keystroke==-1):
     keystroke = window.getch()  #get current key being pressed
+    
     if(keystroke==490): #1
         #import Jugando
         paint_title(window, ' PLAY (Batlle Royal)')
-        
         #wait_esc(window)
         play_snake(window)
-        
         paint_menu(window)
         keystroke=-1
-    elif(keystroke==500):
-        paint_title(window, ' SCOREBOARD ')
-        #wait_esc(window)
-        scoreboard(window)
-        paint_menu(window)
-        keystroke=-1
+
+    #elif(keystroke==500):
+    #    paint_title(window, ' SCOREBOARD ')
+    #    #wait_esc(window)
+    #    scoreboard(window)
+    #    paint_menu(window)
+    #    keystroke=-1
+
     elif(keystroke==50): #2
         paint_title(window, ' SELECT BLOCK ')
         #wait_esc(window)
@@ -690,25 +709,25 @@ while(keystroke==-1):
         keystroke=-1
     elif(keystroke==49): #1
         paint_title(window,' 1 INSERT BLOCK ')
-        window.addstr(7,21, '¿Desea importar Archivo?')            
-        window.addstr(8,21, 'S/N')  
+        window.addstr(7,20, '¿Desea importar Archivo?')            
+        window.addstr(8,30, 'S/N')  
 
         #print(window.getch())
         #if(window.getch() == 110):
         #    paint_menu(window)
-
         #wait_esc(window)
         import_archiv(window)
         paint_menu(window)
         keystroke=-1
 
-    elif(keystroke==54):
-        paint_title(window,' 6 NEW PLAYER ')
+    #elif(keystroke==54):
+    #    paint_title(window,' 6 NEW PLAYER ')
+    #
+    #    #wait_esc(window)
+    #    new_player(window)
+    #    paint_menu(window)
+    #    keystroke=-1
 
-        #wait_esc(window)
-        new_player(window)
-        paint_menu(window)
-        keystroke=-1
     elif(keystroke==55):
         #print("user actual: " + usuario_actual_play)
         pass

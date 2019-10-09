@@ -1,4 +1,4 @@
 digraph G { rankdir=LR
 node [shape = record, fillcolor=seashell2];
- "Boo\n14" -> "Geoff\n15" -> "Mario1\n12" -> "Mario2\n16" -> "Pickachu\n13"
+
 }
