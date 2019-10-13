@@ -1,13 +1,7 @@
 digraph G { rankdir=TB
 node [shape=record];
-node0[label = "{<f0>|<f1> Class = estructuras\nTimeStamp = 09-10-19::12:56:26\nPSHASH = 5465\nHASH = as|<f2> }"];
+node0[label = "{<f0>|<f1> Class = Estructura de Datos\nTimeStamp = 13-10-19::08:19:29\nPSHASH = 5465\nHASH = as|<f2> }"];
 node0-> node1;
 node1-> node0;
-node1[label = "{<f0>|<f1> Class = comp1\nTimeStamp = 09-10-19::12:56:26\nPSHASH = 5465\nHASH = as|<f2> }"];
-node1-> node2;
-node2-> node1;
-node2[label = "{<f0>|<f1> Class = ipc1\nTimeStamp = 09-10-19::12:56:26\nPSHASH = 5465\nHASH = as|<f2> }"];
-node2-> node3;
-node3-> node2;
-node3[label = "{<f0>|<f1> Class = lenguajes\nTimeStamp = 09-10-19::12:56:26\nPSHASH = 5465\nHASH = as|<f2> }"];
+node1[label = "{<f0>|<f1> Class = b3_nose\nTimeStamp = 13-10-19::08:19:35\nPSHASH = 5465\nHASH = as|<f2> }"];
 }

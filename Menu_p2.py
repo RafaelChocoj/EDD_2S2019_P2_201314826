@@ -7,6 +7,9 @@ from Carga_Data import Import_data #para importar datos en csv
 from ListaDoble import ListaDob #para lista de bloques
 lis_blocks = ListaDob()
 
+from carga_json import Import_json #para leer el jeson vr freddy actual
+#jason_read = Import_json()
+
 global node_block_ac #para el bloque actual seleccionado
 node_block_ac = None
 
@@ -63,12 +66,7 @@ def paint_reports(win):
     paint_title(win,' REPORTS ')         
     win.addstr(7,21, '1. BLOCKCHAIN REPORT')            
     win.addstr(8,21, '2. TREE REPORTS')        
-    """
-    win.addstr(7,21, '1. Snake Report')            
-    win.addstr(8,21, '2. Score Report')      
-    win.addstr(9,21, '3. Scoreboard Report')  
-    win.addstr(10,21, '4. Users Report')    
-    """     
+   
     win.addstr(12,21, '(ESC). Salir')            
     #win.timeout(-1)    
 
@@ -422,14 +420,18 @@ def obtengo_lis_bloques():
     
     lis_blocks.Insert_fin(date_now_str,"lenguajes", "jasson5", "5465","as")
 
-#para seleccionar usuarios
-#def contenido_block(win):
+def insert_node_blocke(class_b, data):
+
+    f_ahora = datetime.datetime.today()
+    date_now_str = f_ahora.strftime('%d-%m-%y::%H:%M:%S')
+    #insert_inicio(index, timestamp, class_b, data, previous_hash, hash_b):
+    lis_blocks.Insert_fin(date_now_str,class_b, data, "5465","as")
 
 #para seleccionar usuarios
 def block_seleccion(win):
 
     #para obtener lista de usuarios
-    obtengo_lis_bloques()
+    ############obtengo_lis_bloques()
     blocke_actual = lis_blocks.primero_head  
 
     dir_iz = ""
@@ -503,7 +505,14 @@ def block_seleccion(win):
                 global node_block_ac
                 node_block_ac = blocke_actual
                 #solo para ejemplo
-                tree_avl.insert_ejemplo()
+                #tree_avl.insert_ejemplo()
+
+                jason_read = Import_json()
+                jason_read.clean_tree()
+                jason_read.read_json(node_block_ac.data)
+                global tree_avl
+                tree_avl = jason_read.retorno_tree()
+                #tree_avl.Graficando_inor()
 
                 break
             elif tecla == 27:
@@ -554,8 +563,8 @@ def pintar_block_f2(win, blocke_actual, dir_iz, dir_der):
     win.addstr(y,x, "CLASS: " + blocke_actual.class_b )
     y =y+1
     #######
-    win.addstr(y,x, "DATA: " + blocke_actual.data )
-    y =y+1
+    ######win.addstr(y,x, "DATA: " + blocke_actual.data )
+    ######y =y+1
     #######
     win.addstr(y,x, "PREVIOUSHASH: " + blocke_actual.previous_hash )
     y =y+1
@@ -587,8 +596,9 @@ def import_archiv(win):
                 #global lis_user
                 #lis_user = data_im.retorno_users()
                 window.addstr(8,5, '(Datos importados) Presione una tecla para salir')
-                print(data_im.retorno_class())
-                print(data_im.retorno_data() )
+                #print(data_im.retorno_class())
+                #print(data_im.retorno_data() )
+                insert_node_blocke(data_im.retorno_class(), data_im.retorno_data()) ####para insertar para ejemplo
             elif (encontrad == False):
                 window.addstr(8,5, 'Archivo no Encontrado')
 
