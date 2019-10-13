@@ -17,6 +17,7 @@ class NodeDo:
 
 import os
 import datetime
+import hashlib #para hash
 
 class ListaDob:
     def __init__(self):        
@@ -32,7 +33,18 @@ class ListaDob:
     def insert_inicio(self, timestamp, class_b, data, previous_hash, hash_b):
     
         #new_nod = NodeDo(index, timestamp, class_b, data, previous_hash, hash_b)
-        new_nod = NodeDo(self.size, timestamp, class_b, data, previous_hash, hash_b)
+
+        previous_hash = self.prev_hash()
+        #print(previous_hash)
+
+        ###creando hash actual
+        hash_new = str(self.size) + timestamp + class_b + data + previous_hash
+        #print(hash_new)
+        hash = hashlib.sha256(hash_new.encode())
+        hash = hash.hexdigest()
+        #print(hash)
+
+        new_nod = NodeDo(self.size, timestamp, class_b, data, previous_hash, hash)
         if self.esVacio():    
             self.primero_head = new_nod
             #self.ultimo = new_nod
@@ -46,11 +58,36 @@ class ListaDob:
 
         self.size = self.size + 1
 
+
+    #para obtener el hash anterior
+    def prev_hash(self):
+        if self.esVacio():
+            hash_ante = "0000"
+            return hash_ante
+        else:
+            
+            tempo = self.primero_head
+            while (tempo.siguiente is not None):
+                tempo = tempo.siguiente
+            hash_ante = tempo.hash_b
+            return hash_ante
+
     #para insertar nodo Al final
     #def Insert_fin(self, index, timestamp, class_b, data, previous_hash, hash_b):
     def Insert_fin(self,  timestamp, class_b, data, previous_hash, hash_b):
         #new_nod = NodeDo(index, timestamp, class_b, data, previous_hash, hash_b)
-        new_nod = NodeDo(self.size, timestamp, class_b, data, previous_hash, hash_b)
+
+        previous_hash = self.prev_hash()
+        #print(previous_hash)
+
+        ###creando hash actual
+        hash_new = str(self.size) + timestamp + class_b + data + previous_hash
+        #print(hash_new)
+        hash = hashlib.sha256(hash_new.encode())
+        hash = hash.hexdigest()
+        #print(hash)
+
+        new_nod = NodeDo(self.size, timestamp, class_b, data, previous_hash, hash)
 
         if self.esVacio():
             self.primero_head = new_nod

@@ -1,5 +1,6 @@
 
 import curses #import the curses library
+import hashlib #para hash
 
 import time
 from Carga_Data import Import_data #para importar datos en csv
@@ -168,23 +169,23 @@ def report_seleccion(win):
         elif tecla == 50: #2
             #Jugando_n_class.game_graf_score()
             report_select_arbol(win)
-        elif tecla == 51: #3
-            tabla_puntos.graf_puntuaciones()
-            #break
-        elif tecla == 52: #4
-            ## inicio verificando si tiene usuarios ingresados
-            paint_title(win, '4. Users Report')
-            user_actual = lis_user.primero_head
-            if (user_actual == None):
-                pintar_usuarios(win, "No tiene usuarios ingresados")
-                while True:
-                    tecla = window.getch()
-                    if tecla == 27:
-                        break
-            else:
-                lis_user.graf_users()
 
-            ## fin verificando si tiene usuarios ingresados
+        #elif tecla == 51: #3
+        #    tabla_puntos.graf_puntuaciones()
+        #    #break
+        #elif tecla == 52: #4
+        #    ## inicio verificando si tiene usuarios ingresados
+        #    paint_title(win, '4. Users Report')
+        #    user_actual = lis_user.primero_head
+        #    if (user_actual == None):
+        #        pintar_usuarios(win, "No tiene usuarios ingresados")
+        #        while True:
+        #            tecla = window.getch()
+        #            if tecla == 27:
+        #                break
+        #    else:
+        #        lis_user.graf_users()
+
         elif tecla == 27:
             break
 
@@ -425,7 +426,14 @@ def insert_node_blocke(class_b, data):
     f_ahora = datetime.datetime.today()
     date_now_str = f_ahora.strftime('%d-%m-%y::%H:%M:%S')
     #insert_inicio(index, timestamp, class_b, data, previous_hash, hash_b):
-    lis_blocks.Insert_fin(date_now_str,class_b, data, "5465","as")
+    """
+    pru = 'hola mundo'
+    hash = hashlib.sha256(pru.encode())
+    hash = hash.hexdigest()
+    print(hash)
+    """
+    #lis_blocks.Insert_fin(date_now_str,class_b, data, hash, hash)
+    lis_blocks.Insert_fin(date_now_str,class_b, data, "", "")
 
 #para seleccionar usuarios
 def block_seleccion(win):
@@ -547,7 +555,9 @@ def pintar_block_f2(win, blocke_actual, dir_iz, dir_der):
 
     #y = int(altura/2)
     #x = int(int(ancho/2) - (len(user)/2))
-    y = 4
+
+    #y = 4
+    y = 3
     x = 10
 
     #x = int(int(ancho/2) - (len(menu[index])/2))
@@ -560,15 +570,57 @@ def pintar_block_f2(win, blocke_actual, dir_iz, dir_der):
     y =y+1
     win.addstr(y,x, "TIMESTAMP: " + blocke_actual.timestamp )
     y =y+1
-    win.addstr(y,x, "CLASS: " + blocke_actual.class_b )
+    win.addstr(y,x, "CLASS: " + str(blocke_actual.class_b))
     y =y+1
     #######
-    ######win.addstr(y,x, "DATA: " + blocke_actual.data )
-    ######y =y+1
-    #######
-    win.addstr(y,x, "PREVIOUSHASH: " + blocke_actual.previous_hash )
+    data_ac = str(blocke_actual.data )
+    #data_ac =  "este \n una prueba \n"
+    #data_ac = "12345678901234567890123456798"
+    data_ac = data_ac.replace("\n", " ")
+    win.addstr(y,x, "DATA: " + data_ac[0: 30])
     y =y+1
-    win.addstr(y,x, "HASH: " + blocke_actual.hash_b )
+    win.addstr(y,x+3, data_ac[30: 60])
+    y =y+1
+    win.addstr(y,x+3, data_ac[60: 90])
+    y =y+1
+    #######
+
+    #win.addstr(y,x, "PREVIOUSHASH: " + blocke_actual.previous_hash )
+    #y =y+1
+    win.addstr(y,x, "PREVIOUSHASH: ")
+    y =y+1
+    hash_ante = str(blocke_actual.previous_hash)
+    #print(hash_ante)
+    tem = ""
+    for row in hash_ante:
+        tem = tem + row
+
+        if len(tem) > 31:
+            win.addstr(y, x+3, tem )
+            #win.addstr(y, x+24, tem )
+            y =y+1
+            tem = ""
+    win.addstr(y,x+3, tem )
+    y =y+1
+    #win.addstr(y,x, "HASH: " + blocke_actual.hash_b )
+
+    win.addstr(y,x, "HASH: ")
+    y =y+1
+    hash_ac = str(blocke_actual.hash_b)
+    #win.addstr(y,x, "HASH: " + hash_ac )
+    tem = ""
+    for row in hash_ac:
+        tem = tem + row
+
+        if len(tem) > 31:
+        #if len(tem) > 30:
+            #win.addstr(y,x+ 16, tem )
+            win.addstr(y,x+3, tem )
+            y =y+1
+            tem = ""
+    win.addstr(y,x+3, tem )
+    #y =y+1
+    
 
     win.addstr(10,4, dir_iz)
     win.addstr(10,51, dir_der)

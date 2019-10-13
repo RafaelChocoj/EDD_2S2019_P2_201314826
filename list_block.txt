@@ -1,7 +1,3 @@
 digraph G { rankdir=TB
 node [shape=record];
-node0[label = "{<f0>|<f1> Class = Estructura de Datos\nTimeStamp = 13-10-19::08:19:29\nPSHASH = 5465\nHASH = as|<f2> }"];
-node0-> node1;
-node1-> node0;
-node1[label = "{<f0>|<f1> Class = b3_nose\nTimeStamp = 13-10-19::08:19:35\nPSHASH = 5465\nHASH = as|<f2> }"];
 }
