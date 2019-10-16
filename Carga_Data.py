@@ -79,6 +79,7 @@ class Import_data:
             #archivo = open("b2.csv")
             archivo = open(dir_archivo)
             reader = csv.reader(archivo)
+            print('reader: *' + str(reader) +"*")
             for row in reader:
       
                 #print(row[0] +"="+row[1])

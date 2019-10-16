@@ -44,7 +44,6 @@ def conectando():
 
     server.connect((IP_address, Port))
 
-
     run_cliente = threading.Thread(target=run_cliente_sockets)
 
 
@@ -53,6 +52,7 @@ def conectando():
 
 def insertando_nod():
     print("insertado")
+    #paint_menu(window)
     window.addstr(8,21, 'Bloque insertado')     
     size_bloques = data_en_espera.index
     date_now_str = data_en_espera.timestamp
@@ -65,7 +65,8 @@ def insertando_nod():
 
 
 def no_insert():
-    print("No insert")
+    #print("No insert")
+    paint_menu(window)
     window.addstr(8,21, 'Bloque no insertado')     
     window.addstr(9,21, 'Bloque no hackeado :v')    
     data_en_espera.index = 0
@@ -87,17 +88,41 @@ def is_jason(json_string):
 
 def verificando_bloque_recibido(json_string):
     print("verificando")
+    #paint_menu(window)
     window.addstr(8,21, 'verificando')  
     #server.sendall('true'.encode('utf-8'))
     #window.addstr(8,21, 'true, correcto')
     Es_correcto = is_jason(json_string)
     print("Es_correcto "  + str(Es_correcto))
     
-    data_json = json.loads(json_string)
-    print("class")
-    print(data_json['CLASS'])
-
     if Es_correcto == True:
+        data_json = json.loads(json_string)
+        
+        data_en_espera.index = data_json['INDEX']
+        data_en_espera.timestamp = data_json['TIMESTAMP']
+        data_en_espera.class_b = data_json['CLASS']
+        data_en_espera.data = data_json['DATA']
+        data_en_espera.previous_hash = data_json['PREVIOUSHASH']
+        data_en_espera.hash_b = data_json['HASH']
+
+        print(data_en_espera.index)
+        print(data_en_espera.class_b)
+
+        ###creando el hast para ver si es el mismo
+        #hash previo
+        previous_hash = data_en_espera.previous_hash
+        size_bloques = data_en_espera.index
+        #hash actual recibido
+        
+        hash_new = str(size_bloques) + data_en_espera.timestamp + data_en_espera.class_b + data_en_espera.data + previous_hash
+        #hash_new = str(size_bloques)
+        hash = hashlib.sha256(hash_new.encode())
+        hash = hash.hexdigest()
+
+        print("hash de jason:  " + data_en_espera.hash_b)
+        print("hash de verif:  " + hash)
+
+        
         window.addstr(10,21, str(Es_correcto) +' true, correcto')
         server.sendall('true'.encode('utf-8'))
     else:
@@ -132,9 +157,12 @@ def run_cliente_sockets():
                 recibido = message.decode('utf-8')
                 print(recibido)
                 if recibido == 'true':
+                    #paint_title(win,'respuesta de') 
                     insertando_nod()
                 elif recibido == 'false':
                     no_insert()
+                elif recibido == 'Welcome to [EDD]Blockchain Project!':
+                    print("no hacer nada")
                 else:
                     verificando_bloque_recibido(recibido)
 
@@ -154,7 +182,7 @@ def run_cliente_sockets():
     server.close()
         
 def paint_recibidos(win, recib):
-    paint_title(win,' REcibido ')          
+    paint_title(win,' Recibido ')          
     win.addstr(7,21, recib)             
     #win.addstr(8,21, '2. Select Block')       
     #win.addstr(9,21, '3. Reports')    
@@ -580,6 +608,7 @@ def insert_node_blocke(class_b, data):
     """
     ##lis_blocks.Insert_fin(date_now_str,class_b, data, hash, hash)
     #lis_blocks.Insert_fin(date_now_str,class_b, data, "", "")
+    ######data = 'prueba'
 
     #hash previo
     previous_hash = lis_blocks.prev_hash()
@@ -588,9 +617,11 @@ def insert_node_blocke(class_b, data):
     #print(size_bloques)
     #creando hash actual
     hash_new = str(size_bloques) + date_now_str + class_b + data + previous_hash
+    #hash_new = str(size_bloques) 
     hash = hashlib.sha256(hash_new.encode())
     hash = hash.hexdigest()
     #print(hash)
+    
 
     data_en_espera.index = size_bloques
     data_en_espera.timestamp = date_now_str
@@ -603,20 +634,20 @@ def insert_node_blocke(class_b, data):
 
     
     data_json = {}
-    data_json['INDEX'] = 0
-    data_json['TIMESTAMP'] = str(date_now_str)
-    data_json['CLASS'] = str(class_b)
+    data_json['INDEX'] = size_bloques
+    data_json['TIMESTAMP'] = date_now_str
+    data_json['CLASS'] = class_b
     data_json['DATA'] = data
-    data_json['PREVIOUSHASH'] = str(previous_hash)
-    data_json['HASH'] = str(hash)
+    data_json['PREVIOUSHASH'] = previous_hash
+    data_json['HASH'] = hash
 
     json_send = json.dumps(data_json)
     
     #with open('prubb.json', 'w') as file:
     #    json.dump(data_json, file)
 
-    print ("<yo>")
-    print(json_send.encode())
+    #print ("<yo>")
+    #print(json_send.encode())
     server.sendall(json_send.encode())
 
     """
@@ -835,10 +866,13 @@ def import_archiv(win):
             win.keypad(False)    
             curses.echo()         
             curses.curs_set(1)     
-            nombre_archivo  = win.getstr(6,20).decode(encoding="utf-8")
+            #nombre_archivo  = win.getstr(6,20).decode(encoding="utf-8")
+            nombre_archivo  = win.getstr(6,20).decode('utf-8')
             
             encontrad = False
             encontrad = data_im.importando(nombre_archivo)
+            print('encontrad: ' + str(encontrad))
+            print('nombre_archivo: *' + nombre_archivo +"*")
             paint_title(window,' 1 - IMPORT ')
             if (encontrad == True):
                 #global lis_user
@@ -849,12 +883,16 @@ def import_archiv(win):
                 insert_node_blocke(data_im.retorno_class(), data_im.retorno_data()) ####para insertar para ejemplo
             elif (encontrad == False):
                 window.addstr(8,5, 'Archivo no Encontrado')
+                window.addstr(3,5, 'intente de nuevo') 
+                print('Archivo no Encontrado')
 
             win.keypad(True)    
             curses.noecho()         
             curses.curs_set(0) 
 
             tecla = window.getch()
+
+            
 
             #window.timeout(-1)   
             break
@@ -931,7 +969,7 @@ conectando()
 
 stdscr = curses.initscr() #initialize console
 
-global window #### new para que sea global
+#global window #### new para que sea global
 
 window = curses.newwin(20,60,0,0) #create a new curses window
 window.keypad(True)     #enable Keypad mode
@@ -944,7 +982,7 @@ paint_menu(window)      #paint menu
 keystroke = -1
 while(keystroke==-1):
     ##print("imprimeidno aglo")
-    window.timeout(390) ############
+    window.timeout(400) ############
 
     keystroke = window.getch()  #get current key being pressed
     
@@ -999,9 +1037,9 @@ while(keystroke==-1):
     #    paint_menu(window)
     #    keystroke=-1
 
-    elif(keystroke==27):
-        paint_menu(window)      #paint menu
-        keystroke=-1
+    #elif(keystroke==27):
+    #    #paint_menu(window)      #paint menu
+    #    keystroke=-1
 
     elif(keystroke==55):
         window.timeout(0)
