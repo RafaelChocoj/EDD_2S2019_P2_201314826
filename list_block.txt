@@ -1,3 +1,7 @@
 digraph G { rankdir=TB
 node [shape=record];
+node0[label = "{<f0>|<f1> Class = Estructura de Datosb2\nTimeStamp = 15-10-19-::16:47:39\nPSHASH = 0000\nHASH = b3192a3bbb3bdf97f12167cde4d6348a952b2a90ae47db7aae24d09b24165cf6|<f2> }"];
+node0-> node1;
+node1-> node0;
+node1[label = "{<f0>|<f1> Class = EDD\nTimeStamp = 15-10-19-::16:47:45\nPSHASH = b3192a3bbb3bdf97f12167cde4d6348a952b2a90ae47db7aae24d09b24165cf6\nHASH = 90f8c439ba236048f422b9886708358362a7b6820205f8664f0cf1318b12fe86|<f2> }"];
 }

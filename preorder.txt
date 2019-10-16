@@ -1,4 +1,4 @@
 digraph G { rankdir=LR
 node [shape = record, fillcolor=seashell2];
- "201313526\nAlan2" -> "20101403525\nNery2" -> "201005874\nEstudiante12" -> "201212963\nAndres2" -> "201403819\nAnne2" -> "201403624\nFernando2"
+ "201400954\nEst1" -> "201212123\nEst2" -> "201303817\nRosa" -> "201602255\nEst5" -> "201403624\nAntonio" -> "98963565\nEst3"
 }

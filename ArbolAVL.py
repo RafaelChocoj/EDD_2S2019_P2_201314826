@@ -199,15 +199,13 @@ class arbol_AVL:
 
 ar = arbol_AVL()
 
-ar.insert_nod("mario") 
-ar.insert_nod("kart") 
-ar.insert_nod("nose")
-ar.insert_nod("pa1")
-ar.insert_nod("verde")
-ar.insert_nod("luig")
-ar.insert_nod("lzz")
-ar.insert_nod("lz3")
-ar.insert_nod("lz5")
+ar.insert_nod("201400954") 
+ar.insert_nod("201212123") 
+ar.insert_nod("98963565")
+ar.insert_nod("201303817")
+ar.insert_nod("201403624")
+ar.insert_nod("201602255")
+ar.insert_nod("201212255-")
 
 """
 ar.insert_nod(40)
@@ -216,4 +214,4 @@ ar.insert_nod(25)
 """
 print(ar)
 
-ar.print_tree()
+#ar.print_tree()

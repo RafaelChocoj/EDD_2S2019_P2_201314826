@@ -74,20 +74,25 @@ class ListaDob:
 
     #para insertar nodo Al final
     #def Insert_fin(self, index, timestamp, class_b, data, previous_hash, hash_b):
-    def Insert_fin(self,  timestamp, class_b, data, previous_hash, hash_b):
+    def Insert_fin(self,  timestamp, class_b, data, previous_hash, hash_b, size_bloques):
         #new_nod = NodeDo(index, timestamp, class_b, data, previous_hash, hash_b)
 
+        """
         previous_hash = self.prev_hash()
         #print(previous_hash)
-
         ###creando hash actual
         hash_new = str(self.size) + timestamp + class_b + data + previous_hash
         #print(hash_new)
         hash = hashlib.sha256(hash_new.encode())
         hash = hash.hexdigest()
         #print(hash)
+        """
 
-        new_nod = NodeDo(self.size, timestamp, class_b, data, previous_hash, hash)
+        hash = hash_b
+
+        #new_nod = NodeDo(self.size, timestamp, class_b, data, previous_hash, hash)
+        new_nod = NodeDo(size_bloques, timestamp, class_b, data, previous_hash, hash)
+
 
         if self.esVacio():
             self.primero_head = new_nod

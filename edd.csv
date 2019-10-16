@@ -1,4 +1,4 @@
-class,Estructura de Datosb2
+class,Estructuras de datos
 data,"{
     ""value"":""201403525-Nery"",
     ""left"":{
@@ -7,7 +7,7 @@ data,"{
             ""value"":""201005874-Estudiante1"",
             ""left"":null,
             ""right"":null
-        }, 
+        },
         ""right"":{
             ""value"":""201313526-Alan"",
             ""left"":null,
@@ -22,10 +22,9 @@ data,"{
             ""right"":null
         },
         ""right"":{
-            ""value"":""2016020255-Estudiante2"",
+            ""value"":""201602255-Estudiante2"",
             ""left"":null,
             ""right"":null
-
         }
     }
 }"

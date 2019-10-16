@@ -9,20 +9,19 @@ class Import_data:
             archivo = open(dir_archivo)
             reader = csv.reader(archivo)
             for row in reader:
-                print(row)
-                """
+      
                 #print(row[0] +"="+row[1])
-                if row[0] == "CLASS":
+                if row[0] == "class":
                     #print(row[0] +"="+row[1])
                     global class_var
                     class_var = row[1]
                     print("class_var: " + class_var)
-                if row[0] == "DATA":
+                if row[0] == "data":
                     #print(row[0] +"="+row[1])
                     global data_var
                     data_var = row[1]
                     print("data_var: " +data_var)
-                """
+          
 
             encontrado = True
         except:
@@ -42,7 +41,7 @@ class Import_data:
 """
 
 impo = Import_data()
-impo.importando("b2.csv")
+impo.importando("edd.csv")
 #impo.importando("bloques\\b2.csv")
 
 ##lis_user.Lista_imprimir_ade()

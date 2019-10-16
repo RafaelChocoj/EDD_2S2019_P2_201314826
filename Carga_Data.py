@@ -33,7 +33,7 @@ class Import_data:
             encontrado = False
         return encontrado
         
-    def importando(self, dir_archivo):
+    def importando_otro(self, dir_archivo):
         encontrado = False
         try:           
             #archivo = open("b2.csv")
@@ -49,14 +49,14 @@ class Import_data:
             for row in archivo:
             ###for row in reader:
                 tempo = row.split(",")
-                if tempo[0] == "CLASS":
+                if tempo[0] == "class":
                     tempo = tempo[1].split("\n")
                     class_var = tempo[0]
 
-                if tempo[0] == "DATA":
+                if tempo[0] == "data":
                     
                     #data_var = tempo[1]
-                    star = "DATA,"
+                    star = "data,"
                     end = len(row)
                     data_var = row[len(star): end]
                     es_data = True
@@ -67,6 +67,33 @@ class Import_data:
             #print("data_var: **" +data_var+"**")
 
             archivo.close()
+            encontrado = True
+        except:
+            #print("No existe ruta")
+            encontrado = False
+        return encontrado
+
+    def importando(self, dir_archivo):
+        encontrado = False
+        try:           
+            #archivo = open("b2.csv")
+            archivo = open(dir_archivo)
+            reader = csv.reader(archivo)
+            for row in reader:
+      
+                #print(row[0] +"="+row[1])
+                if row[0] == "class":
+                    #print(row[0] +"="+row[1])
+                    global class_var
+                    class_var = row[1]
+                if row[0] == "data":
+                    #print(row[0] +"="+row[1])
+                    global data_var
+                    data_var = row[1]
+
+            #print("class_var:**" + class_var +"**")
+            #print("data_var: **" +data_var+"**")
+
             encontrado = True
         except:
             #print("No existe ruta")
