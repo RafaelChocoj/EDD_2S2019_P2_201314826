@@ -1,7 +1,7 @@
 digraph G { rankdir=TB
 node [shape=record];
-node0[label = "{<f0>|<f1> Class = Estructura de Datosb2\nTimeStamp = 16-10-19-::13:11:03\nPSHASH = 0000\nHASH = 68e7093c1ad43de1fe8a748d1da97c2593f9a3d8f7f7bb0c64d1f3a5e9d73e55|<f2> }"];
+node0[label = "{<f0>|<f1> Class = EDD\nTimeStamp = 17-10-19-::03:35:12\nPSHASH = 0000\nHASH = c83ef0f7d296b0c05134536ab498e2819699b34a43603d653158511ce09cbea1|<f2> }"];
 node0-> node1;
 node1-> node0;
-node1[label = "{<f0>|<f1> Class = Orga\nTimeStamp = 16-10-19-::13:11:51\nPSHASH = 68e7093c1ad43de1fe8a748d1da97c2593f9a3d8f7f7bb0c64d1f3a5e9d73e55\nHASH = 927eef6783b0a7bf4c4938fd3654328744ddd881f8af32b4a3b5137fbf25d59d|<f2> }"];
+node1[label = "{<f0>|<f1> Class = Estructura de Datosb2\nTimeStamp = 17-10-19-::03:36:08\nPSHASH = c83ef0f7d296b0c05134536ab498e2819699b34a43603d653158511ce09cbea1\nHASH = 903e7aafbf582029f35f4a3b7cce03c8b613135e43d0a1ea7fc8308bcff265e2|<f2> }"];
 }

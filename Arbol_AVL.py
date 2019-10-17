@@ -301,6 +301,81 @@ class arbol_AVL:
             self.preorder(root.left, f)
             self.preorder(root.right, f)
 
+    ###para pantalla
+    def _preorder_con(self):
+        global cad
+        cad = ""
+        global index_root
+        index_root = 0
+        self.preorder_con(self.root)
+        cad = "INICIO -> " + cad  +" -> FIN"
+        return cad
+
+    def preorder_con(self, root):
+        
+        if (root != None):
+            global index_root
+            index_root = index_root + 1
+            global cad
+            if (index_root != self.size):
+                cad = cad + root.carnet + "-"  + root.nombre + " -> "
+            else:
+                cad = cad + root.carnet + "-"  + root.nombre + ""
+
+            self.preorder_con(root.left)
+            self.preorder_con(root.right)
+
+    def _inorder_con(self):
+        global cad
+        cad = ""
+        global index_root
+        index_root = 0
+        self.inorder_con(self.root)
+        cad = "INICIO -> " + cad  +" -> FIN"
+        return cad
+        
+    def inorder_con(self, root):
+        
+        if (root != None):
+
+            self.inorder_con(root.left)
+
+            global index_root
+            index_root = index_root + 1
+            global cad
+            if (index_root != self.size):
+                cad = cad + root.carnet + "-"  + root.nombre + " -> "
+            else:
+                cad = cad + root.carnet + "-"  + root.nombre + ""
+
+            self.inorder_con(root.right)
+ 
+    def _postorder_con(self):
+        global cad
+        cad = ""
+        global index_root
+        index_root = 0
+        self.postorder_con(self.root)
+        cad = "INICIO -> " + cad  +" -> FIN"
+        return cad
+        
+    def postorder_con(self, root):
+        
+        if (root != None):
+            
+            self.postorder_con(root.left)
+            self.postorder_con(root.right)
+
+            global cad
+            global index_root
+            index_root = index_root + 1
+            if (index_root != self.size):
+                cad = cad + root.carnet + "-"  + root.nombre + " -> "
+            else:
+                cad = cad + root.carnet + "-"  + root.nombre + ""
+
+            
+
     def Graficando_posor(self):
         global index_root
         index_root = 0

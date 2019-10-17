@@ -65,7 +65,7 @@ def conectando():
 def insertando_nod():
     print("insertado")
     #paint_menu(window)
-    window.addstr(8,21, 'Bloque insertado')     
+    window.addstr(10,21, 'Bloque insertado')     
     size_bloques = data_en_espera.index
     date_now_str = data_en_espera.timestamp
     class_b = data_en_espera.class_b
@@ -79,8 +79,8 @@ def insertando_nod():
 def no_insert():
     #print("No insert")
     paint_menu(window)
-    window.addstr(8,21, 'Bloque no insertado')     
-    window.addstr(9,21, 'Bloque hackeado :v')    
+    window.addstr(10,21, 'Bloque no insertado')     
+    window.addstr(11,21, 'Bloque hackeado :v')    
     data_en_espera.index = 0
     data_en_espera.timestamp = None
     data_en_espera.class_b = None
@@ -101,11 +101,11 @@ def is_jason(json_string):
 def verificando_bloque_recibido(json_string):
     print("verificando")
     #paint_menu(window)
-    window.addstr(8,21, 'verificando')  
+    window.addstr(9,21, 'verificando')  
     #server.sendall('true'.encode('utf-8'))
     #window.addstr(8,21, 'true, correcto')
     Es_correcto = is_jason(json_string)
-    print("Es_correcto "  + str(Es_correcto))
+    #print("Es_correcto "  + str(Es_correcto))
     
     if Es_correcto == True:
         data_json = json.loads(json_string)
@@ -142,12 +142,12 @@ def verificando_bloque_recibido(json_string):
         ###validando has recibido y hash aqui
         #if data_en_espera.hash_b == hash:
         if previous_hash == ultimo_hash:
-            window.addstr(10,21, str(Es_correcto) +', correcto')
+            window.addstr(11,21, str(Es_correcto) +', correcto')
             window.addstr(16,21, 'hash correctos')
             #print('hash correctos')
             server.sendall('true'.encode('utf-8'))
         else:
-            window.addstr(10,21, str(Es_correcto) +', incorrecto')
+            window.addstr(11,21, str(Es_correcto) +', incorrecto')
             window.addstr(16,21, 'hash incorrectos')
             #print('hash incorrectos')
             server.sendall('false'.encode('utf-8'))
@@ -156,7 +156,7 @@ def verificando_bloque_recibido(json_string):
         #window.addstr(10,21, str(Es_correcto) +' true, correcto')
         #server.sendall('true'.encode('utf-8'))
     else:
-        window.addstr(10,21, str(Es_correcto) +' false, no es json')
+        window.addstr(11,21, str(Es_correcto) +' false, no es json')
         server.sendall('false'.encode('utf-8'))
 
 
@@ -186,11 +186,17 @@ def run_cliente_sockets():
                 print ("<recibido>")
                 recibido = message.decode('utf-8')
                 print(recibido)
-                if recibido == 'true':
+                #if recibido == 'true':
+                if recibido == 'true' or recibido == "true":
                     #paint_title(win,'respuesta de') 
                     insertando_nod()
-                elif recibido == 'false':
+
+                    tecla = window.getch() #####
+                #elif recibido == 'false':
+                elif recibido == 'false' or recibido == "false":
                     no_insert()
+
+                    tecla = window.getch()  #####
                 elif recibido == 'Welcome to [EDD]Blockchain Project!':
                     #print("no hacer nada")
                     nada = ""
@@ -278,7 +284,8 @@ def paint_reports(win):
 def paint_reports_tree_rep(win):
     paint_title(win,' TREE REPORTS REPORTS ')         
     win.addstr(7,21, '1. Visualizar árbol')            
-    win.addstr(8,21, '2. Mostrar recorridos')     
+    win.addstr(8,21, '2. Mostrar recorridos')
+    win.addstr(9,21, '3. Mostrar recorridos (Consola)')    
 
     win.addstr(12,21, '(ESC). Salir')            
   
@@ -287,6 +294,14 @@ def paint_reports_recorridos(win):
     win.addstr(7,21, '1. Preorden')            
     win.addstr(8,21, '2. Posorden')  
     win.addstr(9,21, '3. Inorden')   
+
+    win.addstr(12,21, '(ESC). Salir')
+
+def paint_reports_recorridos_consola(win):
+    paint_title(win,' RECORRIDO REPORTS CONSOLA ')         
+    win.addstr(7,21, '1. Preorden (consola)')            
+    win.addstr(8,21, '2. Posorden (consola)')  
+    win.addstr(9,21, '3. Inorden (consola)')   
 
     win.addstr(12,21, '(ESC). Salir')
 
@@ -344,6 +359,60 @@ def report_select_recorrido(win):
         elif tecla == 27:
             break
 
+def paint_recorr_consola(win, recor_str):         
+    y = 4
+    x = 5
+    #y =y+1
+    hash_ac = str(recor_str)
+    tem = ""
+    for row in hash_ac:
+        tem = tem + row
+        if len(tem) > 50:
+            win.addstr(y,x, tem )
+            y =y+1
+            tem = ""
+    win.addstr(y,x, tem )
+
+    win.addstr(12,21, '(ESC). Salir')
+
+#para reporte de recorrido del arbol
+def report_select_recorrido_consola(win):
+     
+    while True:
+        paint_reports_recorridos_consola(win)
+        tecla = window.getch()
+        
+        if tecla == 49: #1  Preorden
+            str_preor = tree_avl._preorder_con()
+            #print(str_preor)
+            paint_title(win,' PREORDER ') 
+            vista_recorrido_consola(win, str_preor)
+            #break
+        elif tecla == 50: #2  Posorden
+
+            str_posr = tree_avl._postorder_con()
+            #print(str_posr)
+            paint_title(win,' POSORDER ') 
+            vista_recorrido_consola(win, str_posr)
+
+
+        elif tecla == 51: #3  Inorden
+            str_inor = tree_avl._inorder_con()
+            #print(str_inor)
+            paint_title(win,' INORDER ') 
+            vista_recorrido_consola(win, str_inor)
+        elif tecla == 27:
+            break
+
+#para reporte de recorrido del arbol
+def vista_recorrido_consola(win, str_preor):
+    while True:
+        paint_recorr_consola(win, str_preor)
+        tecla = window.getch()
+        
+        if tecla == 27:#escape
+            break
+
 #para reporte de Arbol
 def report_select_arbol(win):
      
@@ -357,6 +426,8 @@ def report_select_arbol(win):
             #break
         elif tecla == 50: #2
             report_select_recorrido(win)
+        elif tecla == 51: #3
+            report_select_recorrido_consola(win)
         elif tecla == 27:
             break
 
@@ -1035,6 +1106,7 @@ while(keystroke==-1):
         #    paint_menu(window)
         #wait_esc(window)
         import_archiv(window)
+        window.timeout(-1)
         paint_menu(window)
         keystroke=-1
 
@@ -1046,9 +1118,9 @@ while(keystroke==-1):
     #    paint_menu(window)
     #    keystroke=-1
 
-    #elif(keystroke==27):
-    #    #paint_menu(window)      #paint menu
-    #    keystroke=-1
+    elif(keystroke==27):
+        paint_menu(window)      #paint menu
+        keystroke=-1
 
     elif(keystroke==55):
         #window.timeout(0)
