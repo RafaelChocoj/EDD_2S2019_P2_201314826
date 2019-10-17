@@ -27,6 +27,17 @@ import socket
 import select
 import sys
 
+"""
+#para verificar si se escribio los parametros
+if len(sys.argv) != 3:
+    print ("error al ingresar parametros")
+    print("Correct usage: script, IP address, port number")
+    exit()
+
+IP_address = str(sys.argv[1])
+Port = int(sys.argv[2])
+"""
+
 def conectando():
     global server
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -39,6 +50,7 @@ def conectando():
 
     #IP_address = str(sys.argv[1])
     #Port = int(sys.argv[2])
+
     IP_address = str("localhost")
     Port = int(8080)
 
@@ -68,7 +80,7 @@ def no_insert():
     #print("No insert")
     paint_menu(window)
     window.addstr(8,21, 'Bloque no insertado')     
-    window.addstr(9,21, 'Bloque no hackeado :v')    
+    window.addstr(9,21, 'Bloque hackeado :v')    
     data_en_espera.index = 0
     data_en_espera.timestamp = None
     data_en_espera.class_b = None
@@ -105,12 +117,13 @@ def verificando_bloque_recibido(json_string):
         data_en_espera.previous_hash = data_json['PREVIOUSHASH']
         data_en_espera.hash_b = data_json['HASH']
 
-        print(data_en_espera.index)
-        print(data_en_espera.class_b)
+        #print(data_en_espera.index)
+        #print(data_en_espera.class_b)
 
         ###creando el hast para ver si es el mismo
         #hash previo
         previous_hash = data_en_espera.previous_hash
+        """
         size_bloques = data_en_espera.index
         #hash actual recibido
         
@@ -118,15 +131,32 @@ def verificando_bloque_recibido(json_string):
         #hash_new = str(size_bloques)
         hash = hashlib.sha256(hash_new.encode())
         hash = hash.hexdigest()
+        """
 
-        print("hash de jason:  " + data_en_espera.hash_b)
-        print("hash de verif:  " + hash)
+        ultimo_hash = lis_blocks.prev_hash()
+
+        print("hash de prev jason:  " + previous_hash)
+        print("hash de ultim aqui:  " + ultimo_hash)
 
         
-        window.addstr(10,21, str(Es_correcto) +' true, correcto')
-        server.sendall('true'.encode('utf-8'))
+        ###validando has recibido y hash aqui
+        #if data_en_espera.hash_b == hash:
+        if previous_hash == ultimo_hash:
+            window.addstr(10,21, str(Es_correcto) +', correcto')
+            window.addstr(16,21, 'hash correctos')
+            #print('hash correctos')
+            server.sendall('true'.encode('utf-8'))
+        else:
+            window.addstr(10,21, str(Es_correcto) +', incorrecto')
+            window.addstr(16,21, 'hash incorrectos')
+            #print('hash incorrectos')
+            server.sendall('false'.encode('utf-8'))
+
+
+        #window.addstr(10,21, str(Es_correcto) +' true, correcto')
+        #server.sendall('true'.encode('utf-8'))
     else:
-        window.addstr(10,21, str(Es_correcto) +' false, no es jason')
+        window.addstr(10,21, str(Es_correcto) +' false, no es json')
         server.sendall('false'.encode('utf-8'))
 
 
@@ -162,7 +192,8 @@ def run_cliente_sockets():
                 elif recibido == 'false':
                     no_insert()
                 elif recibido == 'Welcome to [EDD]Blockchain Project!':
-                    print("no hacer nada")
+                    #print("no hacer nada")
+                    nada = ""
                 else:
                     verificando_bloque_recibido(recibido)
 
@@ -343,21 +374,6 @@ def report_seleccion(win):
             #Jugando_n_class.game_graf_score()
             report_select_arbol(win)
 
-        #elif tecla == 51: #3
-        #    tabla_puntos.graf_puntuaciones()
-        #    #break
-        #elif tecla == 52: #4
-        #    ## inicio verificando si tiene usuarios ingresados
-        #    paint_title(win, '4. Users Report')
-        #    user_actual = lis_user.primero_head
-        #    if (user_actual == None):
-        #        pintar_usuarios(win, "No tiene usuarios ingresados")
-        #        while True:
-        #            tecla = window.getch()
-        #            if tecla == 27:
-        #                break
-        #    else:
-        #        lis_user.graf_users()
 
         elif tecla == 27:
             break
@@ -871,8 +887,8 @@ def import_archiv(win):
             
             encontrad = False
             encontrad = data_im.importando(nombre_archivo)
-            print('encontrad: ' + str(encontrad))
-            print('nombre_archivo: *' + nombre_archivo +"*")
+            #print('encontrad: ' + str(encontrad))
+            #print('nombre_archivo: *' + nombre_archivo +"*")
             paint_title(window,' 1 - IMPORT ')
             if (encontrad == True):
                 #global lis_user
@@ -884,7 +900,7 @@ def import_archiv(win):
             elif (encontrad == False):
                 window.addstr(8,5, 'Archivo no Encontrado')
                 window.addstr(3,5, 'intente de nuevo') 
-                print('Archivo no Encontrado')
+                #print('Archivo no Encontrado')
 
             win.keypad(True)    
             curses.noecho()         
@@ -994,13 +1010,6 @@ while(keystroke==-1):
         paint_menu(window)
         keystroke=-1
 
-    #elif(keystroke==500):
-    #    paint_title(window, ' SCOREBOARD ')
-    #    #wait_esc(window)
-    #    scoreboard(window)
-    #    paint_menu(window)
-    #    keystroke=-1
-
     elif(keystroke==50): #2
         window.timeout(0)
         paint_title(window, ' SELECT BLOCK ')
@@ -1016,7 +1025,7 @@ while(keystroke==-1):
         paint_menu(window)
         keystroke=-1
     elif(keystroke==49): #1
-        window.timeout(0)
+        window.timeout(-1)
         paint_title(window,' 1 INSERT BLOCK ')
         window.addstr(7,20, '¿Desea importar Archivo?')            
         window.addstr(8,30, 'S/N')  
@@ -1042,7 +1051,7 @@ while(keystroke==-1):
     #    keystroke=-1
 
     elif(keystroke==55):
-        window.timeout(0)
+        #window.timeout(0)
         #print("user actual: " + usuario_actual_play)
         pass
     else:
