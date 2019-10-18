@@ -65,7 +65,7 @@ def conectando():
 def insertando_nod():
     print("insertado")
     #paint_menu(window)
-    window.addstr(10,21, 'Bloque insertado')     
+    window.addstr(4,21, '*Bloque insertado')     
     size_bloques = data_en_espera.index
     date_now_str = data_en_espera.timestamp
     class_b = data_en_espera.class_b
@@ -75,12 +75,13 @@ def insertando_nod():
 
     lis_blocks.Insert_fin(date_now_str,class_b, data, previous_hash, hash, size_bloques)
 
+    #window.timeout(-1)  
 
 def no_insert():
     #print("No insert")
-    paint_menu(window)
-    window.addstr(10,21, 'Bloque no insertado')     
-    window.addstr(11,21, 'Bloque hackeado :v')    
+    #paint_menu(window)
+    window.addstr(4,21, 'Bloque no insertado')     
+    window.addstr(5,21, 'Bloque hackeado :v')    
     data_en_espera.index = 0
     data_en_espera.timestamp = None
     data_en_espera.class_b = None
@@ -101,7 +102,7 @@ def is_jason(json_string):
 def verificando_bloque_recibido(json_string):
     print("verificando")
     #paint_menu(window)
-    window.addstr(9,21, 'verificando')  
+    window.addstr(2,21, 'verificando')  
     #server.sendall('true'.encode('utf-8'))
     #window.addstr(8,21, 'true, correcto')
     Es_correcto = is_jason(json_string)
@@ -113,7 +114,11 @@ def verificando_bloque_recibido(json_string):
         data_en_espera.index = data_json['INDEX']
         data_en_espera.timestamp = data_json['TIMESTAMP']
         data_en_espera.class_b = data_json['CLASS']
-        data_en_espera.data = data_json['DATA']
+
+        json_dat = data_json['DATA']
+        json_dat = json.dumps(json_dat)
+        data_en_espera.data = json_dat
+
         data_en_espera.previous_hash = data_json['PREVIOUSHASH']
         data_en_espera.hash_b = data_json['HASH']
 
@@ -142,12 +147,12 @@ def verificando_bloque_recibido(json_string):
         ###validando has recibido y hash aqui
         #if data_en_espera.hash_b == hash:
         if previous_hash == ultimo_hash:
-            window.addstr(11,21, str(Es_correcto) +', correcto')
+            window.addstr(15,21, str(Es_correcto) +', correcto')
             window.addstr(16,21, 'hash correctos')
             #print('hash correctos')
             server.sendall('true'.encode('utf-8'))
         else:
-            window.addstr(11,21, str(Es_correcto) +', incorrecto')
+            window.addstr(15,21, ' incorrecto')
             window.addstr(16,21, 'hash incorrectos')
             #print('hash incorrectos')
             server.sendall('false'.encode('utf-8'))
@@ -191,11 +196,13 @@ def run_cliente_sockets():
                     #paint_title(win,'respuesta de') 
                     insertando_nod()
 
-                    tecla = window.getch() #####
+                    #tecla = window.getch()  #####
+                    window.getch()  #####
                 #elif recibido == 'false':
                 elif recibido == 'false' or recibido == "false":
                     no_insert()
 
+                    window.getch()  #####
                     tecla = window.getch()  #####
                 elif recibido == 'Welcome to [EDD]Blockchain Project!':
                     #print("no hacer nada")
@@ -733,17 +740,35 @@ def insert_node_blocke(class_b, data):
     #with open('prubb.json', 'w') as file:
     #    json.dump(data_json, file)
 
+    data_json_str = "{ "
+    data_json_str += "\"INDEX\": " + str(size_bloques) +","
+    data_json_str += "\"TIMESTAMP\": \"" + date_now_str + "\","
+    data_json_str += "\"CLASS\": \"" + class_b + "\","
+    data_json_str += "\"DATA\": " + data + ","
+    data_json_str += "\"PREVIOUSHASH\": \"" + previous_hash + "\","
+    data_json_str += "\"HASH\": \"" + hash + "\""
+    data_json_str += "} "
+
     #print ("<yo>")
     #print(json_send.encode())
-    server.sendall(json_send.encode())
+    print(json_send)
+    print(data_json_str)
 
     """
-    data_json = "\"INDEX\": " + size_bloques
-    data_json['TIMESTAMP'] = date_now_str
-    data_json['CLASS'] = class_b
-    data_json['DATA'] = data
-    data_json['PREVIOUSHASH'] = previous_hash
-    data_json['HASH'] = hash
+    with open('conlib.json', 'w') as file:
+        json.dump(data_json, file)
+    with open('sin_lib.json', 'w') as file:
+        json.dump(data_json_str, file)
+    f = open("sin_lib_op2.json", "w")
+
+    f.write(data_json_str)
+    f.close()
+    """
+
+    #server.sendall(json_send.encode())
+    server.sendall(data_json_str.encode()) ##este es
+   
+    """
 
     server.sendall(json_send.encode())
     ########server.sendall("enviando desde insert node".encode('utf-8'))
@@ -966,7 +991,7 @@ def import_archiv(win):
                 #lis_user = data_im.retorno_users()
                 window.addstr(8,5, '(Datos importados) Presione una tecla para salir')
                 #print(data_im.retorno_class())
-                #print(data_im.retorno_data() )
+                print(data_im.retorno_data() )
                 insert_node_blocke(data_im.retorno_class(), data_im.retorno_data()) ####para insertar para ejemplo
             elif (encontrad == False):
                 window.addstr(8,5, 'Archivo no Encontrado')
@@ -1121,6 +1146,8 @@ while(keystroke==-1):
     elif(keystroke==27):
         paint_menu(window)      #paint menu
         keystroke=-1
+        
+        
 
     elif(keystroke==55):
         #window.timeout(0)

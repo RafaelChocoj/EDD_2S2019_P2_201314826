@@ -1,4 +1,5 @@
 import json
+import sys
 
 from Arbol_AVL import arbol_AVL #para el arbol avl
 tree_avl = arbol_AVL()
@@ -16,8 +17,9 @@ class Import_json:
     def read_json(self, dir_archivo):
 
         ##para leer desde string ya cargado
-        data_json = json.loads(dir_archivo)
-        #print(data_json)
+        ##data_json = json.loads(dir_archivo)
+        data_json = dir_archivo
+        print(data_json)
 
         self.read_json_preorder(data_json)
         """    
@@ -57,7 +59,7 @@ class Import_json:
     def read_json_preorder(self, json_izq):
         #data_json = json.loads(json_izq)
 
-        #print(json_izq['value'])
+        print(json_izq['value'])
 
         val_ar = json_izq['value']
         #print(json_izq['value'])
@@ -67,13 +69,13 @@ class Import_json:
 
         #para recorrer a la izquierda
         if json_izq['left'] != None:
-            #print("<-")
+            print("<-")
             self.read_json_preorder(json_izq['left'])
 
         #para recorrer a la derecha
         
         if json_izq['right'] != None:
-            #print("->")
+            print("->")
             self.read_json_preorder(json_izq['right'])
 
     def read_json_bk_1510(self, dir_archivo):
@@ -136,6 +138,9 @@ class Import_json:
             print(data_json['PREVIOUSHASH'])
             print(data_json['HASH'])
 
+            d_jason = data_json['DATA']
+            self.read_json(d_jason)
+
 
 
 
@@ -180,7 +185,7 @@ class Import_json:
             
 
 js = Import_json()
-js.read_json_bk_ruta('prubb.json')
+js.read_json_bk_ruta('ENVIO_BLOQUE.json')
 
 #tree_avl.Graficando_arbol()
 #tree_avl.Graficando_posor()
