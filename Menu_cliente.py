@@ -27,7 +27,7 @@ import socket
 import select
 import sys
 
-"""
+
 #para verificar si se escribio los parametros
 if len(sys.argv) != 3:
     print ("error al ingresar parametros")
@@ -36,7 +36,7 @@ if len(sys.argv) != 3:
 
 IP_address = str(sys.argv[1])
 Port = int(sys.argv[2])
-"""
+
 
 def conectando():
     global server
@@ -51,8 +51,9 @@ def conectando():
     #IP_address = str(sys.argv[1])
     #Port = int(sys.argv[2])
 
-    IP_address = str("localhost")
-    Port = int(8080)
+    ##prueba local
+    ###IP_address = str("localhost")
+    ###Port = int(8080)
 
     server.connect((IP_address, Port))
 
