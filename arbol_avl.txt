@@ -2,16 +2,18 @@ digraph G {
 rankdir=TB;
 graph [nodesep=0.5 ];
 node [shape = record, fillcolor=seashell2];
-nodo201212123:C1 -> nodo201303817
-nodo201212123 [ label ="<C0>|Carne: 201212123\nNombre: Est2\nAltura: 2\nFE: 1|<C1>"]; 
-nodo201303817 [ label ="<C0>|Carne: 201303817\nNombre: Rosa\nAltura: 1\nFE: 0|<C1>"]; 
-nodo201400954:C1 -> nodo201602255
-nodo201400954:C0 -> nodo201212123
-nodo201400954 [ label ="<C0>|Carne: 201400954\nNombre: Est1\nAltura: 3\nFE: 0|<C1>"]; 
-nodo201403624 [ label ="<C0>|Carne: 201403624\nNombre: Antonio\nAltura: 1\nFE: 0|<C1>"]; 
-nodo201602255:C1 -> nodo98963565
-nodo201602255:C0 -> nodo201403624
-nodo201602255 [ label ="<C0>|Carne: 201602255\nNombre: Est5\nAltura: 2\nFE: 0|<C1>"]; 
-nodo98963565 [ label ="<C0>|Carne: 98963565\nNombre: Est3\nAltura: 1\nFE: 0|<C1>"]; 
+nodo201005874 [ label ="<C0>|Carne: 201005874\nNombre: Estudiante1\nAltura: 0 (1)\nFE: 0|<C1>"]; 
+nodo201212963:C1 -> nodo201313526
+nodo201212963:C0 -> nodo201005874
+nodo201212963 [ label ="<C0>|Carne: 201212963\nNombre: Andres\nAltura: 1 (2)\nFE: 0|<C1>"]; 
+nodo201313526 [ label ="<C0>|Carne: 201313526\nNombre: Alan\nAltura: 0 (1)\nFE: 0|<C1>"]; 
+nodo201403525:C1 -> nodo201403819
+nodo201403525:C0 -> nodo201212963
+nodo201403525 [ label ="<C0>|Carne: 201403525\nNombre: Nery\nAltura: 2 (3)\nFE: 0|<C1>"]; 
+nodo201403624 [ label ="<C0>|Carne: 201403624\nNombre: Fernando\nAltura: 0 (1)\nFE: 0|<C1>"]; 
+nodo201403819:C1 -> nodo201602255
+nodo201403819:C0 -> nodo201403624
+nodo201403819 [ label ="<C0>|Carne: 201403819\nNombre: Anne\nAltura: 1 (2)\nFE: 0|<C1>"]; 
+nodo201602255 [ label ="<C0>|Carne: 201602255\nNombre: Estudiante2\nAltura: 0 (1)\nFE: 0|<C1>"]; 
 
 }

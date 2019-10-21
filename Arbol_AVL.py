@@ -233,7 +233,8 @@ class arbol_AVL:
             f.write("nodo"+ root.carnet  +" [ label =\"<C0>|")
             f.write("Carne: "+ root.carnet + "\\n")
             f.write("Nombre: "+ root.nombre + "\\n")
-            f.write("Altura: "+ str(root.height)+ "\\n")
+            ####f.write("Altura: "+ str(root.height)+ "\\n")
+            f.write("Altura: "+ str(root.height - 1)+ " ("+str(root.height)+ ")\\n")
             f.write("FE: "+ str(root.fe ))
             f.write("|<C1>\"]; \n")
 

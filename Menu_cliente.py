@@ -51,9 +51,9 @@ def conectando():
     #IP_address = str(sys.argv[1])
     #Port = int(sys.argv[2])
 
-    ##prueba local
-    ###IP_address = str("localhost")
-    ###Port = int(8080)
+    ###prueba local
+    #IP_address = str("localhost")
+    #Port = int(8080)
 
     server.connect((IP_address, Port))
 
@@ -742,7 +742,7 @@ def insert_node_blocke(class_b, data):
     #    json.dump(data_json, file)
 
     data_json_str = "{ "
-    data_json_str += "\"INDEX\": " + str(size_bloques) +","
+    data_json_str += "\"INDEX\": \"" + str(size_bloques) + "\","
     data_json_str += "\"TIMESTAMP\": \"" + date_now_str + "\","
     data_json_str += "\"CLASS\": \"" + class_b + "\","
     data_json_str += "\"DATA\": " + data + ","
@@ -752,7 +752,7 @@ def insert_node_blocke(class_b, data):
 
     #print ("<yo>")
     #print(json_send.encode())
-    print(json_send)
+    ####print(json_send)
     print(data_json_str)
 
     """
@@ -992,7 +992,7 @@ def import_archiv(win):
                 #lis_user = data_im.retorno_users()
                 window.addstr(8,5, '(Datos importados) Presione una tecla para salir')
                 #print(data_im.retorno_class())
-                print(data_im.retorno_data() )
+                #print(data_im.retorno_data() )
                 insert_node_blocke(data_im.retorno_class(), data_im.retorno_data()) ####para insertar para ejemplo
             elif (encontrad == False):
                 window.addstr(8,5, 'Archivo no Encontrado')
